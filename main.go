@@ -4,13 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
 	"github.com/google/uuid"
 )
 
 // item represents a to-do item.
 type Item struct {
-    ID   string `json:"id"`
-    Name string `json:"name"`
+	ID   string `json:"id"`
+	Name string `json:"name"`
 }
 
 var items = []Item{} // In-memory storage for items
@@ -18,13 +19,14 @@ const Dport = ":8012"
 
 func main() {
 	http.HandleFunc("/AddItem", AddItem)
+	http.HandleFunc("/GetAllItems", GetAllItems)
 	fmt.Printf("Server is starting on port: %v\n", Dport) // Added newline for better terminal output
 	http.ListenAndServe(Dport, nil)
 }
 
 // Handle requests to the /AddItem endpoint
-//Created by Ashbir - 500228410
-func AddItem(w http.ResponseWriter, r *http.Request) { 
+// Created by Ashbir - 500228410
+func AddItem(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
 		var item Item
@@ -41,3 +43,13 @@ func AddItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Handle requests to the /GetAllItems endpoint
+// Created by Jevica - 500218849
+func GetAllItems(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		json.NewEncoder(w).Encode(items)
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
+}
