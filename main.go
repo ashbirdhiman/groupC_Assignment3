@@ -22,6 +22,7 @@ func main() {
 	http.HandleFunc("/AddItem", AddItem)
 	http.HandleFunc("/GetAllItems", GetAllItems)
 	http.HandleFunc("/GetOneItem/", GetOneItem)
+	http.HandleFunc("/UpdateItem/", UpdateItem)
 
 	fmt.Printf("Server is starting on port: %v\n", Dport) // Added newline for better terminal output
 	http.ListenAndServe(Dport, nil)
