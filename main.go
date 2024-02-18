@@ -22,7 +22,8 @@ func main() {
 	http.ListenAndServe(Dport, nil)
 }
 
-// Handle requests to the /items endpoint
+// Handle requests to the /AddItem endpoint
+//Created by Ashbir - 500228410
 func AddItem(w http.ResponseWriter, r *http.Request) { 
 	switch r.Method {
 	case "POST":
