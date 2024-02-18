@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/google/uuid"
 )
@@ -20,6 +21,7 @@ const Dport = ":8012"
 func main() {
 	http.HandleFunc("/AddItem", AddItem)
 	http.HandleFunc("/GetAllItems", GetAllItems)
+	http.HandleFunc("/GetOneItem/", GetOneItem)
 	fmt.Printf("Server is starting on port: %v\n", Dport) // Added newline for better terminal output
 	http.ListenAndServe(Dport, nil)
 }
@@ -51,5 +53,25 @@ func GetAllItems(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(items)
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
+}
+
+//Handle Requests to the /GetOneItem/{itemID} endpoint
+//Created By Akash - 500218794
+
+func GetOneItem(w http.ResponseWriter, r *http.Request) {
+
+	itemID := strings.TrimPrefix(r.URL.Path, "/GetOneItem/")
+	fmt.Print(itemID)
+	switch r.Method {
+	case "GET":
+		for _, item := range items {
+			fmt.Print(item.ID)
+			if item.ID == itemID {
+				json.NewEncoder(w).Encode(item)
+				return
+			}
+		}
+		http.Error(w, "Item not found", http.StatusNotFound)
 	}
 }
