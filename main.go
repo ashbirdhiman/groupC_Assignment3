@@ -22,6 +22,7 @@ func main() {
 	http.HandleFunc("/AddItem", AddItem)
 	http.HandleFunc("/GetAllItems", GetAllItems)
 	http.HandleFunc("/GetOneItem/", GetOneItem)
+
 	fmt.Printf("Server is starting on port: %v\n", Dport) // Added newline for better terminal output
 	http.ListenAndServe(Dport, nil)
 }
@@ -79,4 +80,40 @@ func GetOneItem(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Use Get Method Only", http.StatusNotFound)
 	}
 
+}
+
+// created by Abhinav Mahajan 500230044
+func UpdateItem(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "PUT":
+
+		id := strings.TrimPrefix(r.URL.Path, "/UpdateItem/")
+
+		var updatedItem Item
+		if err := json.NewDecoder(r.Body).Decode(&updatedItem); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		// Updating the item retrieved through ID
+		found := false
+		for i, item := range items {
+			if item.ID == id {
+				updatedItem.ID = id    // checking the ID is unchanged
+				items[i] = updatedItem // Update the item in the slice
+				found = true
+				break
+			}
+		}
+		// displaying error if the ID is not found
+		if !found {
+			http.Error(w, "Item not found", http.StatusNotFound)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(updatedItem)
+	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed) // dealing with error of method
+	}
 }
