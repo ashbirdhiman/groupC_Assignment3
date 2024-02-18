@@ -60,7 +60,7 @@ func GetAllItems(w http.ResponseWriter, r *http.Request) {
 //Created By Akash - 500218794
 
 func GetOneItem(w http.ResponseWriter, r *http.Request) {
-
+	//Getting the Item ID from URL
 	itemID := strings.TrimPrefix(r.URL.Path, "/GetOneItem/")
 	fmt.Print(itemID)
 	switch r.Method {
