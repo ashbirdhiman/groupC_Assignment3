@@ -72,6 +72,11 @@ func GetOneItem(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		}
+		//If Item ID is not correct
 		http.Error(w, "Item not found", http.StatusNotFound)
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		http.Error(w, "Use Get Method Only", http.StatusNotFound)
 	}
+
 }
