@@ -105,3 +105,39 @@ func TestGetOneItem(t *testing.T) {
 		t.Errorf("handler returned wrong item: got ID %v want %v", item.ID, "some-item-id")
 	}
 }
+
+// test for DeleteOneItem() in main.go
+// created by Nikhil Kaushik (500223528)
+func TestDeleteOneItem(t *testing.T) {
+
+	testItem := Item{ID: "delete-me", Name: "Delete Test Item"} // assigning value to testItem
+	items = append(items, testItem)
+
+	// Create a DELETE request to delete the test item
+	req, err := http.NewRequest("DELETE", fmt.Sprintf("/DeleteOneItem/%s", createdItemID), nil)
+	if err != nil {
+		t.Fatal(err) // If there's an error, I stop the test
+	}
+
+	rr := httptest.NewRecorder() // recording the response
+	handler := http.HandlerFunc(DeleteOneItem)
+	handler.ServeHTTP(rr, req)
+
+	// Check if the http status is OK
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+	}
+
+	found := false // Verifying that the item intended was deleted
+
+	for _, item := range items {
+		if item.ID == createdItemID {
+			found = true
+			break
+		}
+	}
+
+	if found {
+		t.Errorf("item was not deleted from the store")
+	}
+}
