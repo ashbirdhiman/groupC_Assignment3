@@ -33,7 +33,7 @@ cd groupC_Assignment3
 - **Update an item:** Send a PUT request to /UpdateItem/{itemID} with new details.
 - **Delete an item:** Send a DELETE request to /DeleteOneItem/{itemID}.
 - **Duplicate an item:** Send a POST request to /Duplicate/{itemID} to duplicate the Item
-- **Rename an item:** Send a PUT request to /Rename/{itemID} with new details.
+- **Rename an item:** Send a PUT request to /RenameItem/{itemID} with new details.
 
 ### Running Tests
 To run the tests for our server:
