@@ -14,6 +14,11 @@ To use our project, you need to have Go installed on your computer. You can down
 First, clone this project to your local machine using Git:
 
 ```
+https://go.dev/doc/install
+```
+
+
+```
 git clone https://github.com/ashbirdhiman/groupC_Assignment3.git
 cd groupC_Assignment3
 ```
@@ -21,6 +26,7 @@ cd groupC_Assignment3
 **Running the Server**
 - Open a terminal or command prompt.
 - Change the directory to where you have our project files.
+- Type “go mod init” to initiate the folder
 - Type **'go run main.go'** to start the server.
 ```go run main.go```
 
