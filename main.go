@@ -118,3 +118,38 @@ func UpdateItem(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed) // dealing with error of method
 	}
 }
+
+//Handle Requests to the /DeleteOneItem/{itemID} endpoint
+//Created By Bilal Nawaz - 500228652
+
+// Function to Handle request to delete an item using the itemID
+func DeleteOneItem(w http.ResponseWriter, r *http.Request) {
+	//Extracting the itemID from the aURL using the predefined function found in the Go Packag
+	itemID := strings.TrimPrefix(r.URL.Path, "/DeleteOneItem/")
+
+	switch r.Method {
+	//Executing this case when r.Method is a "DELETE" one
+	case "DELETE":
+		//Index is set to -1 so to assume the item was not found.
+		index := -1
+		// Loop to search through the "items" memory for the desired itemID.
+		for i, item := range items {
+			if item.ID == itemID {
+				index = i
+				break
+			}
+		}
+		//If the item we are looking for is found i.e index is not equal to -1
+		// Will execute the else satement if the itemID is not found i.e index=-1
+		if index != -1 {
+			items = append(items[:index], items[index+1:]...)
+			w.WriteHeader(http.StatusOK)
+		} else {
+			http.Error(w, "Item not found", http.StatusNotFound)
+		}
+	// default if the method asked is other than "DELETE".
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
+
+}
