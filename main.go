@@ -158,7 +158,7 @@ func DeleteOneItem(w http.ResponseWriter, r *http.Request) {
 
 
 //Handle Requests to the /DuplicateItem/{itemID} endpoint
-//Created By RajKaran
+// Created by Ashbir - 500228410
 func DuplicateItem(w http.ResponseWriter, r *http.Request) {
     switch r.Method {
     case "POST":

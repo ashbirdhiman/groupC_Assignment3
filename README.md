@@ -31,9 +31,9 @@ cd groupC_Assignment3
 - **Get all items:** Send a GET request to /GetAllItems.
 - **Get one item:** Send a GET request to /GetOneItem/{itemID}.
 - **Update an item:** Send a PUT request to /UpdateItem/{itemID} with new details.
-- 
 - **Delete an item:** Send a DELETE request to /DeleteOneItem/{itemID}.
-
+- **Duplicate an item:** Send a POST request to /Duplicate/{itemID} to duplicate the Item
+- **Rename an item:** Send a PUT request to /Rename/{itemID} with new details.
 
 ### Running Tests
 To run the tests for our server:
