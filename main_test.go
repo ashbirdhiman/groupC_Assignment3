@@ -49,3 +49,30 @@ func TestAddItem(t *testing.T) {
 		createdItemID = newItem.ID
 	}
 }
+
+//Creatd by Mohamed Ayan Khatri - 500226334
+//This function is used to test the GetAllItems() functions of main.go
+func TestGetAllItems(t *testing.T) {
+	req, err := http.NewRequest("GET", "/GetAllItems", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// creating a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(GetAllItems)
+	handler.ServeHTTP(rr, req)
+	// checking if the status code is what we expect
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+	}
+	// checking if the response body is what we expect
+	var items []Item
+	err = json.Unmarshal(rr.Body.Bytes(), &items)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(items) == 0 {
+		t.Errorf("Expected at least one item in the list")
+	}
+}
