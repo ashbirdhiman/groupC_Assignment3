@@ -24,7 +24,7 @@ func main() {
 	http.HandleFunc("/GetOneItem/", GetOneItem)
 	http.HandleFunc("/UpdateItem/", UpdateItem)       // handler for PUT
 	http.HandleFunc("/DeleteOneItem/", DeleteOneItem) // handler for Delete
-
+	http.HandleFunc("/DuplicateItem/", DuplicateItem) 
 	fmt.Printf("Server is starting on port: %v\n", Dport) // Added newline for better terminal output
 	http.ListenAndServe(Dport, nil)
 }
@@ -154,3 +154,49 @@ func DeleteOneItem(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+
+//Handle Requests to the /DuplicateItem/{itemID} endpoint
+//Created By RajKaran
+func DuplicateItem(w http.ResponseWriter, r *http.Request) {
+    switch r.Method {
+    case "POST":
+        // Get the item ID from the URL path
+        parts := strings.Split(r.URL.Path, "/")
+		//spilting parts into three part
+		//localhost:8012, DuplicateItem, ID
+
+        if len(parts) < 3 {
+            http.Error(w, "Invalid request", http.StatusBadRequest)
+            return
+        }
+		//Storing ID into itemID
+        itemID := parts[2]
+
+        // Find the item by ID
+        var item Item
+        for _, itm := range items {
+            if itm.ID == itemID {
+                item = itm
+                break
+            }
+        }
+        // Check if the item was found
+        if item.ID == "" {
+            http.Error(w, "Item Not Found: "+itemID, http.StatusNotFound)
+            return
+        }
+
+        // Duplicate the item
+        duplicatedItem := item
+        duplicatedItem.ID = uuid.New().String() // Generate a new ID for the duplicated item
+        items = append(items, duplicatedItem)
+
+        // Return the duplicated item
+        w.WriteHeader(http.StatusCreated)
+        json.NewEncoder(w).Encode(duplicatedItem)
+    default:
+        w.WriteHeader(http.StatusMethodNotAllowed)
+    }
+}
+
