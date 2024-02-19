@@ -45,16 +45,16 @@ To run the tests for our server:
 ### Team Members
 Our team worked together on this project. Here are our members:
 
-Ashbir - 500228410
-Jevica - 500218849
-Akash - 500218794
-Abhinav Mahajan - 500230044
-Vinay Chhabra - 500228151
-Bilal Nawaz -  500228652
-Mohamed Ayan Khatri - 500226334
-Simrandeep Singh - 500229180
-Nikhil Kaushik - 500223528
-Rajkarn kaur - 500226333
+- Ashbir - 500228410
+- Jevica - 500218849
+- Akash - 500218794
+- Abhinav Mahajan - 500230044
+- Vinay Chhabra - 500228151
+- Bilal Nawaz -  500228652
+- Mohamed Ayan Khatri - 500226334
+- Simrandeep Singh - 500229180
+- Nikhil Kaushik - 500223528
+- Rajkarn kaur - 500226333
 
 
 Everyone contributed by writing parts of the code and tests.
