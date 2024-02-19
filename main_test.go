@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -50,8 +51,8 @@ func TestAddItem(t *testing.T) {
 	}
 }
 
-//Creatd by Mohamed Ayan Khatri - 500226334
-//This function is used to test the GetAllItems() functions of main.go
+// Creatd by Mohamed Ayan Khatri - 500226334
+// This function is used to test the GetAllItems() functions of main.go
 func TestGetAllItems(t *testing.T) {
 	req, err := http.NewRequest("GET", "/GetAllItems", nil)
 	if err != nil {
@@ -74,5 +75,33 @@ func TestGetAllItems(t *testing.T) {
 	}
 	if len(items) == 0 {
 		t.Errorf("Expected at least one item in the list")
+	}
+}
+
+// Creatd by Simrandeep singh - 500229180
+// This function is used to test the TestGetOneItem() functions of main.go
+func TestGetOneItem(t *testing.T) {
+
+	//Here I am using createdItemID variable which holds value of Item ID
+	req, err := http.NewRequest("GET", fmt.Sprintf("/GetOneItem/%s", createdItemID), nil)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(GetOneItem)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+	}
+
+	var item Item
+	err = json.Unmarshal(rr.Body.Bytes(), &item)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if item.ID != createdItemID { // Adjust based on your test setup
+		t.Errorf("handler returned wrong item: got ID %v want %v", item.ID, "some-item-id")
 	}
 }
