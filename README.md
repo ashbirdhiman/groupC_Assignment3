@@ -13,8 +13,10 @@ To use our project, you need to have Go installed on your computer. You can down
 
 First, clone this project to your local machine using Git:
 
-```git clone https://github.com/ashbirdhiman/groupC_Assignment3.git
-cd groupC_Assignment3```
+```
+git clone https://github.com/ashbirdhiman/groupC_Assignment3.git
+cd groupC_Assignment3
+```
 
 **Running the Server**
 - Open a terminal or command prompt.
